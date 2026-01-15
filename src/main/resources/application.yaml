@@ -1,3 +1,9 @@
 spring:
-  application:
-    name: TrafficBoard
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/${db}
+    username: ${user}
+    password: ${pw}
+
+mybatis:
+  mapper-locations: classpath:com.example.TrafficBoard.mapper/*.xml
