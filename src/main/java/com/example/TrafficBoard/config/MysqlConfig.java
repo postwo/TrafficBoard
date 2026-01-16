@@ -23,7 +23,7 @@ public class MysqlConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
         // 1. 실제 쿼리가 담긴 Mapper XML 파일 위치 설정
-        sessionFactory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+        sessionFactory.setMapperLocations(resolver.getResources("classpath:mappers/*.xml"));
 
         // 2. MyBatis 세부 설정 파일 위치 (CamelCase 설정 등)
         Resource myBatisConfig = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
