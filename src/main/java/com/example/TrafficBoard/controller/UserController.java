@@ -1,5 +1,6 @@
 package com.example.TrafficBoard.controller;
 
+import com.example.TrafficBoard.aop.LoginCheck;
 import com.example.TrafficBoard.dto.UserDTO;
 import com.example.TrafficBoard.dto.request.UserDeleteId;
 import com.example.TrafficBoard.dto.request.UserLoginRequest;
@@ -77,10 +78,11 @@ public class UserController {
 
     // 비밀번호 수정
     @PatchMapping("password")
-    public ResponseEntity<LoginResponse> updateUserPassword(@RequestBody UserUpdatePasswordRequest userUpdatePasswordRequest,
+    @LoginCheck(type = LoginCheck.UserType.USER) // 이메서드가 실행되기전에 aop 먼저 동작
+    public ResponseEntity<LoginResponse> updateUserPassword(String accountId ,@RequestBody UserUpdatePasswordRequest userUpdatePasswordRequest,
                                                             HttpSession session) {
         ResponseEntity<LoginResponse> responseEntity = null;
-        String Id = SessionUtil.getLoginMemberId(session);
+        String Id = accountId;
         String beforePassword = userUpdatePasswordRequest.getBeforePassword();
         String afterPassword = userUpdatePasswordRequest.getAfterPassword();
 
