@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fastcampus.boardserver.mapper.CategoryMapper">
+<mapper namespace="com.example.TrafficBoard.mapper.CategoryMapper">
 
-    <insert id="register" parameterType="com.fastcampus.boardserver.dto.CategoryDTO">
+    <insert id="register" parameterType="com.example.TrafficBoard.dto.CategoryDTO">
         INSERT INTO category (id, name)
         VALUES (#{id}, #{name})
     </insert>
 
-    <update id="updateCategory" parameterType="com.fastcampus.boardserver.dto.CategoryDTO">
+    <update id="updateCategory" parameterType="com.example.TrafficBoard.dto.CategoryDTO">
         UPDATE category
         SET name = #{name}
         WHERE id = #{id}
