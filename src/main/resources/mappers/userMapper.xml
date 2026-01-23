@@ -6,7 +6,7 @@
 <mapper namespace="com.example.TrafficBoard.mapper.UserProfileMapper">
 
     <select id="getUserProfile" resultType="com.example.TrafficBoard.dto.UserDTO">
-        SELECT userId, userId, password, nickName, createTime, isWithDraw, status
+        SELECT id,userId, userId, password, nickName, createTime, isWithDraw, status
         FROM user
         WHERE userId = #{id}
     </select>

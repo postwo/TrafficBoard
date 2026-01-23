@@ -23,6 +23,8 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private UserProfileMapper userProfileMapper;
 
+    //동작 방식: postMapper.register(postDTO)가 성공적으로 실행되어 DB에 새 글이 들어가면, @CacheEvict가 즉시 호출되어 getProducts 캐시 영역을 싹 비웁니다.
+    // @CacheEvict 사용 이유: 다음번에 누군가 목록 조회를 요청했을 때, 비어있는 캐시 대신 DB에서 방금 등록된 새 게시글까지 포함된 최신 리스트를 가져오게 하기 위함입니다.
     @CacheEvict(value="getProducts", allEntries = true)
     @Override
     public void register(String id, PostDTO postDTO) { // 게시글 작성
