@@ -5,5 +5,24 @@ spring:
     username: ${user}
     password: ${pw}
 
+  # Redis 설정 추가
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      repositories: # Redis를 DB처럼 쓰지 않고, 순수하게 '캐시 창고'로만 쓰겠다는 의미
+        enabled: false # False (사용 안 함 - 현재 설정): 단순히 @Cacheable 같은 어노테이션만 써서 "데이터가 있으면 가져오고 없으면 DB 가기" 작업만 할 때. (성능이 더 가볍고 깔끔해집니다.)
+
+  # 캐시 타입 설정 추가
+  cache: # 임시 저장 데이터를 서버 메모리가 아닌, Redis 서버에 저장해라
+    type: redis
+
+# 사용자 정의 만료 시간 설정
+# 상품 목록: 상품 정보는 자주 바뀌지 않으니 10시간 정도 길게 잡아도 됩니다.
+#설정 이유: 만약 유효 기간이 없다면, Redis라는 창고에 옛날 데이터가 꽉 차서 정작 중요한 데이터를 못 넣는 '저장 공간 부족' 사태가 올 수 있습니다. 기간을 정해두면 오래된 데이터는 자동으로 삭제되어 관리가 편해집니다.
+expire:
+  defaultTime: 36288000
+
 mybatis:
   mapper-locations: classpath:com.example.TrafficBoard.mapper/*.xml
