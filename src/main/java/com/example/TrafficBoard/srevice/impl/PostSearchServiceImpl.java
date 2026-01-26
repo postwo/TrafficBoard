@@ -19,7 +19,7 @@ public class PostSearchServiceImpl implements PostSearchService {
 
     private final PostSearchMapper productSearchMapper;
 
-    // 검색에서 비동기 사용 x 결과를 기다리지 않기 때문에 
+    // 검색에서 비동기 사용 x 결과를 기다리지 않기 때문에
 //    @Async // 비동기 , 이거는 결과값을 받아서 바로 화면에 보여줘야 하는 경우에는 사용 x
     //이유: 메인 로직은 @Async 메서드가 끝나기도 전에 "나 다음 줄 실행할래!" 하고 넘어가 버리는데, 아직 데이터(List)는 도착하지 않았기 때문
     //결과: 데이터가 비어 있거나 null인 상태로 화면이 그려질 위험
