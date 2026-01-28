@@ -1,7 +1,9 @@
 package com.example.TrafficBoard.srevice.impl;
 
+import com.example.TrafficBoard.dto.CommentDTO;
 import com.example.TrafficBoard.dto.PostDTO;
 import com.example.TrafficBoard.dto.UserDTO;
+import com.example.TrafficBoard.mapper.CommentMapper;
 import com.example.TrafficBoard.mapper.PostMapper;
 import com.example.TrafficBoard.mapper.UserProfileMapper;
 import com.example.TrafficBoard.srevice.PostService;
@@ -19,6 +21,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostMapper postMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
     @Autowired
     private UserProfileMapper userProfileMapper;
@@ -63,6 +68,36 @@ public class PostServiceImpl implements PostService {
         } else {
             log.error("deleteProudct ERROR! {}", productId);
             throw new RuntimeException("updateProducts ERROR! 물품 삭제 메서드를 확인해주세요\n" + "Params : " + productId);
+        }
+    }
+
+    @Override
+    public void registerComment(CommentDTO commentDTO) {
+        if (commentDTO.getPostId() != 0) {
+            commentMapper.register(commentDTO);
+        } else {
+            log.error("registerComment ERROR! {}", commentDTO);
+            throw new RuntimeException("registerComment ERROR! 댓글 추가 메서드를 확인해주세요\n" + "Params : " + commentDTO);
+        }
+    }
+
+    @Override
+    public void updateComment(CommentDTO commentDTO) {
+        if (commentDTO != null) {
+            commentMapper.updateComments(commentDTO);
+        } else {
+            log.error("updateComment ERROR! {}", commentDTO);
+            throw new RuntimeException("updateComment ERROR! 댓글 변경 메서드를 확인해주세요\n" + "Params : " + commentDTO);
+        }
+    }
+
+    @Override
+    public void deletePostComment(int userId, int commentId) {
+        if (userId != 0 && commentId != 0) {
+            commentMapper.deletePostComment(commentId);
+        } else {
+            log.error("deletePostComment ERROR! {}", commentId);
+            throw new RuntimeException("deletePostComment ERROR! 댓글 삭제 메서드를 확인해주세요\n" + "Params : " + commentId);
         }
     }
 }
