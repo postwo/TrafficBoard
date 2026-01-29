@@ -2,9 +2,11 @@ package com.example.TrafficBoard.srevice.impl;
 
 import com.example.TrafficBoard.dto.CommentDTO;
 import com.example.TrafficBoard.dto.PostDTO;
+import com.example.TrafficBoard.dto.TagDTO;
 import com.example.TrafficBoard.dto.UserDTO;
 import com.example.TrafficBoard.mapper.CommentMapper;
 import com.example.TrafficBoard.mapper.PostMapper;
+import com.example.TrafficBoard.mapper.TagMapper;
 import com.example.TrafficBoard.mapper.UserProfileMapper;
 import com.example.TrafficBoard.srevice.PostService;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +26,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Autowired
     private UserProfileMapper userProfileMapper;
@@ -71,6 +76,7 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    // comment
     @Override
     public void registerComment(CommentDTO commentDTO) {
         if (commentDTO.getPostId() != 0) {
@@ -98,6 +104,37 @@ public class PostServiceImpl implements PostService {
         } else {
             log.error("deletePostComment ERROR! {}", commentId);
             throw new RuntimeException("deletePostComment ERROR! 댓글 삭제 메서드를 확인해주세요\n" + "Params : " + commentId);
+        }
+    }
+
+    // tag
+    @Override
+    public void registerTag(TagDTO tagDTO) {
+        if (tagDTO.getPostId() != 0) {
+            tagMapper.register(tagDTO);
+        } else {
+            log.error("registerTag ERROR! {}", tagDTO);
+            throw new RuntimeException("registerTag ERROR! 태그 추가 메서드를 확인해주세요\n" + "Params : " + tagDTO);
+        }
+    }
+
+    @Override
+    public void updateTag(TagDTO tagDTO) {
+        if (tagDTO != null) {
+            tagMapper.updateTags(tagDTO);
+        } else {
+            log.error("updateTag ERROR! {}", tagDTO);
+            throw new RuntimeException("updateTag ERROR! 태그 변경 메서드를 확인해주세요\n" + "Params : " + tagDTO);
+        }
+    }
+
+    @Override
+    public void deletePostTag(int userId, int tagId) {
+        if (userId != 0 && tagId != 0) {
+            tagMapper.deletePostTag(tagId);
+        } else {
+            log.error("deletePostTag ERROR! {}", tagId);
+            throw new RuntimeException("deletePostTag ERROR! 태그 삭제 메서드를 확인해주세요\n" + "Params : " + tagId);
         }
     }
 }
