@@ -46,10 +46,20 @@ dependencies {
     // 고성능(traffic일 몰린상황)에선느 log4j2 가 압도적으로 좋다
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
+    //Java 코드로 AWS SNS에 메시지를 보내거나(Publish), 주제(Topic)를 생성하고 구독자를 관리하는 기능을 제공
+    implementation 'software.amazon.awssdk:sns'
+    //AWS 라이브러리들의 버전 번호를 한곳에서 관리하겠다 라는 뜻
+    implementation platform('software.amazon.awssdk:bom:2.5.29')
+
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    //AWS의 메시징 서비스인 **SNS(전송)**와 **SQS(수신)**를 스프링에서 매우 편하게 쓰게 해준다
+    compileOnly group: 'org.springframework.cloud', name: 'spring-cloud-aws-messaging', version: '2.2.1.RELEASE'
+    //application.yml에 적어둔 AWS 설정값(AccessKey, Region 등)을 읽어서, 스프링이 시작될 때 AWS 관련 객체들을 **알아서 생성(Bean 등록)**해줍니다. 이 라이브러리가 없으면 우리가 일일이 Java 코드로 설정 클래스를 만들어야 한다
+    compileOnly group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure', version: '2.2.1.RELEASE'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
